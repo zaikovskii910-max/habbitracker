@@ -1,0 +1,18 @@
+{
+  "name": "habit-tracker",
+  "version": "1.0.0",
+  "description": "Трекер привычек и отвычек",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "better-sqlite3": "^11.8.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
