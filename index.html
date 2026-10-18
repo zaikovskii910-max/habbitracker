@@ -1,0 +1,3010 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080a12">
+<title>Трекер привычек и отвычек</title>
+
+<style>
+:root {
+  color-scheme: dark;
+
+  --accent: #a18aff;
+  --accent2: #61d7ff;
+  --green: #45d6a0;
+  --red: #ff748a;
+
+  --text: #f6f7ff;
+  --muted: rgba(235,238,255,.7);
+  --muted2: rgba(235,238,255,.5);
+
+  --glass: rgba(18,22,36,.62);
+  --glass-strong: rgba(18,22,36,.82);
+  --glass-soft: rgba(255,255,255,.09);
+  --border: rgba(255,255,255,.19);
+  --border-strong: rgba(255,255,255,.34);
+  --input: rgba(255,255,255,.1);
+
+  --shadow: 0 20px 60px rgba(0,0,0,.25);
+
+  --wallpaper:
+    radial-gradient(circle at 12% 12%,rgba(155,124,255,.6),transparent 35%),
+    radial-gradient(circle at 90% 20%,rgba(69,214,255,.4),transparent 32%),
+    radial-gradient(circle at 50% 100%,rgba(69,214,160,.2),transparent 40%),
+    linear-gradient(135deg,#080a12,#15172a 55%,#080a12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: #080a12;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #080a12;
+  color: var(--text);
+  font-family: Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  overflow-x: clip;
+  isolation: isolate;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -3px;
+  z-index: -1;
+  pointer-events: none;
+
+  background-color: #080a12;
+  background-image: var(--wallpaper);
+  background-size: cover;
+  background-position: center;
+
+  transform: translateZ(0);
+}
+
+body.theme-light {
+  color-scheme: light;
+
+  --text: #171a26;
+  --muted: rgba(20,24,38,.7);
+  --muted2: rgba(20,24,38,.5);
+
+  --glass: rgba(255,255,255,.58);
+  --glass-strong: rgba(255,255,255,.78);
+  --glass-soft: rgba(255,255,255,.48);
+  --border: rgba(255,255,255,.55);
+  --border-strong: rgba(255,255,255,.82);
+  --input: rgba(255,255,255,.6);
+
+  --shadow: 0 20px 60px rgba(34,45,90,.18);
+}
+
+body.free-user {
+  color-scheme: light;
+
+  --text: #171a26;
+  --muted: rgba(20,24,38,.7);
+  --muted2: rgba(20,24,38,.5);
+
+  --glass: rgba(255,255,255,.65);
+  --glass-strong: rgba(255,255,255,.82);
+  --glass-soft: rgba(255,255,255,.5);
+  --border: rgba(255,255,255,.6);
+  --border-strong: rgba(255,255,255,.85);
+  --input: rgba(255,255,255,.65);
+
+  --wallpaper:
+    radial-gradient(circle at 10% 10%,rgba(155,124,255,.25),transparent 35%),
+    radial-gradient(circle at 90% 15%,rgba(69,214,255,.25),transparent 35%),
+    linear-gradient(135deg,#eaf0ff,#f8fbff,#e9ecff);
+}
+
+body.wallpaper-aurora {
+  --wallpaper:
+    radial-gradient(circle at 12% 12%,rgba(155,124,255,.6),transparent 35%),
+    radial-gradient(circle at 90% 20%,rgba(69,214,255,.4),transparent 32%),
+    radial-gradient(circle at 50% 100%,rgba(69,214,160,.2),transparent 40%),
+    linear-gradient(135deg,#080a12,#15172a 55%,#080a12);
+}
+
+body.wallpaper-nebula {
+  --wallpaper:
+    radial-gradient(circle at 20% 15%,rgba(255,116,138,.55),transparent 35%),
+    radial-gradient(circle at 85% 20%,rgba(155,124,255,.65),transparent 35%),
+    linear-gradient(135deg,#120918,#281338,#080812);
+}
+
+body.wallpaper-ocean {
+  --wallpaper:
+    radial-gradient(circle at 20% 10%,rgba(69,214,255,.55),transparent 35%),
+    radial-gradient(circle at 85% 80%,rgba(69,214,160,.4),transparent 35%),
+    linear-gradient(135deg,#06131d,#0b3041,#041018);
+}
+
+body.wallpaper-sunset {
+  --wallpaper:
+    radial-gradient(circle at 15% 15%,rgba(255,209,102,.6),transparent 35%),
+    radial-gradient(circle at 85% 20%,rgba(255,116,138,.6),transparent 35%),
+    linear-gradient(135deg,#27100d,#3b2032,#100b18);
+}
+
+body.wallpaper-forest {
+  --wallpaper:
+    radial-gradient(circle at 15% 15%,rgba(69,214,160,.5),transparent 35%),
+    radial-gradient(circle at 85% 20%,rgba(154,222,123,.35),transparent 35%),
+    linear-gradient(135deg,#06130e,#103025,#04100b);
+}
+
+body.wallpaper-crystal {
+  --wallpaper:
+    radial-gradient(circle at 15% 15%,rgba(255,255,255,.65),transparent 35%),
+    radial-gradient(circle at 85% 20%,rgba(155,124,255,.4),transparent 35%),
+    linear-gradient(135deg,#dce5ff,#f8fbff,#e5dcff);
+}
+
+/* Собственные обои */
+
+body.wallpaper-custom::before {
+  background-image:
+    linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.15)),
+    var(--custom-wallpaper);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Общие элементы */
+
+button,input,textarea,select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.container {
+  max-width: 1120px;
+  margin: auto;
+  padding: 24px 20px 90px;
+}
+
+.glass,
+header,
+.stat,
+.panel,
+.habit,
+.modal,
+.user-row,
+.day,
+.day-summary,
+.day-habit,
+.empty,
+.premium-info {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+}
+
+header,
+.stat,
+.panel,
+.habit,
+.modal,
+.premium-info {
+  position: relative;
+}
+
+header::before,
+.stat::before,
+.panel::before,
+.habit::before,
+.modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg,rgba(255,255,255,.17),transparent 45%);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+
+  padding: 15px;
+  margin-bottom: 32px;
+  border-radius: 24px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 950;
+}
+
+.logo span {
+  color: var(--accent2);
+}
+
+.date {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.account-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.account-name {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.badge {
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(155,124,255,.2);
+  border: 1px solid rgba(155,124,255,.4);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.btn {
+  background: linear-gradient(135deg,#9b7cff,#45bfff);
+  color: white;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 14px;
+  padding: 12px 17px;
+  font-weight: 800;
+  transition: .2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.btn-secondary {
+  background: var(--glass-soft);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg,#ff5470,#a83248);
+}
+
+.btn-green {
+  background: linear-gradient(135deg,#45d6a0,#19875e);
+}
+
+.btn-small {
+  padding: 8px 11px;
+  font-size: 12px;
+}
+
+.hero {
+  margin-bottom: 30px;
+  padding: 24px;
+  border-radius: 28px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.hero h1 {
+  font-size: clamp(29px,5vw,46px);
+  letter-spacing: -1px;
+  margin: 0 0 12px;
+}
+
+.hero p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.stat {
+  border-radius: 22px;
+  padding: 20px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.stat-number {
+  font-size: 30px;
+  font-weight: 950;
+  margin-top: 10px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 17px;
+  flex-wrap: wrap;
+}
+
+.toolbar h2 {
+  margin: 0;
+}
+
+.tabs,
+.calendar-modes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tabs {
+  margin-bottom: 20px;
+}
+
+.tab,
+.calendar-mode,
+.theme-choice,
+.wallpaper-choice {
+  background: var(--glass-soft);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px 15px;
+}
+
+.tab.active,
+.calendar-mode.active,
+.theme-choice.active,
+.wallpaper-choice.active {
+  background: linear-gradient(135deg,rgba(155,124,255,.9),rgba(69,191,255,.75));
+  color: white;
+  border-color: rgba(255,255,255,.35);
+}
+
+.habit-list {
+  display: grid;
+  gap: 13px;
+}
+
+.habit {
+  border-radius: 23px;
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.habit-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  flex: 1;
+  min-width: 0;
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 17px;
+  background: var(--glass-soft);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  flex-shrink: 0;
+}
+
+.habit-content {
+  min-width: 0;
+}
+
+.habit-name {
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.habit-description {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 8px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.habit-info {
+  color: var(--muted2);
+  font-size: 12px;
+  margin-top: 9px;
+}
+
+.habit-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.check,
+.icon-button {
+  background: var(--glass-soft);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 13px;
+  padding: 10px;
+  font-weight: 800;
+}
+
+.check {
+  font-size: 12px;
+}
+
+.check.done {
+  background: rgba(69,214,160,.45);
+  border-color: rgba(69,214,160,.65);
+}
+
+.icon-button.delete:hover {
+  color: var(--red);
+}
+
+.panel {
+  border-radius: 26px;
+  padding: 23px;
+  margin-top: 25px;
+}
+
+.panel h2 {
+  margin: 0 0 7px;
+}
+
+.panel p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 13px;
+}
+
+/* Календарь */
+
+.calendar-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 22px 0;
+}
+
+.calendar-navigation {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.calendar-title {
+  min-width: 150px;
+  text-align: center;
+  font-weight: 900;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7,minmax(0,1fr));
+  gap: 8px;
+}
+
+.calendar.day-mode {
+  grid-template-columns: 1fr;
+}
+
+.weekday {
+  color: var(--muted);
+  text-align: center;
+  font-size: 12px;
+  padding: 5px;
+}
+
+.day {
+  border-radius: 17px;
+  min-height: 70px;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: .2s;
+}
+
+.day:hover:not(:disabled) {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+}
+
+.day strong {
+  font-size: 13px;
+}
+
+.day span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.day.active {
+  background: rgba(69,214,160,.35);
+  border-color: rgba(69,214,160,.55);
+}
+
+.day.partial {
+  background: rgba(155,124,255,.35);
+  border-color: rgba(155,124,255,.55);
+}
+
+.day.future {
+  opacity: .3;
+}
+
+.day.other-month {
+  opacity: .45;
+}
+
+.day.today {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.day-mode .day {
+  min-height: 150px;
+}
+
+.day-mode .day strong {
+  font-size: 24px;
+}
+
+.progress {
+  height: 12px;
+  border-radius: 100px;
+  overflow: hidden;
+  background: var(--glass-soft);
+  border: 1px solid var(--border);
+  margin-top: 18px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg,#9b7cff,#45d6ff,#45d6a0);
+  transition: width .3s;
+}
+
+.locked {
+  position: relative;
+  overflow: hidden;
+  min-height: 105px;
+}
+
+.locked::after {
+  content: "🔒 Доступно с Premium";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 10px;
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(12px);
+  color: #6e50d6;
+  font-weight: 900;
+  border-radius: inherit;
+}
+
+.premium-info {
+  padding: 23px;
+  border-radius: 24px;
+  margin-top: 25px;
+}
+
+.premium-info p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* Авторизация всегда тёмная */
+
+.auth-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+
+  background:
+    radial-gradient(circle at 15% 15%,rgba(155,124,255,.35),transparent 35%),
+    radial-gradient(circle at 85% 85%,rgba(69,214,255,.2),transparent 40%),
+    #080a12;
+
+  color: #f6f7ff;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 430px;
+  padding: 34px;
+  text-align: center;
+  border-radius: 30px;
+
+  background: rgba(15,19,33,.82);
+  color: #f6f7ff;
+
+  border: 1px solid rgba(255,255,255,.17);
+  box-shadow: 0 25px 80px rgba(0,0,0,.45);
+
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+}
+
+.auth-card h1 {
+  margin: 28px 0 10px;
+}
+
+.auth-card p {
+  color: rgba(235,238,255,.68);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 15px;
+
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.17);
+  color: white;
+  outline: none;
+}
+
+.auth-card input::placeholder {
+  color: rgba(255,255,255,.45);
+}
+
+.auth-card .btn {
+  width: 100%;
+}
+
+.auth-footer {
+  margin-top: 23px;
+  color: rgba(235,238,255,.62);
+  font-size: 13px;
+}
+
+.auth-switch {
+  background: none;
+  border: 0;
+  color: #c7b8ff;
+  font-weight: 900;
+}
+
+.auth-error {
+  min-height: 18px;
+  margin-top: 12px;
+  color: #ff9aaa;
+  font-size: 13px;
+}
+
+/* Модальные окна */
+
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  background: rgba(0,0,0,.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.modal-bg.open {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 500px;
+  padding: 26px;
+  border-radius: 28px;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  background: var(--glass-strong);
+}
+
+.modal.large {
+  max-width: 680px;
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 13px;
+  border-radius: 15px;
+  background: var(--input);
+  color: var(--text);
+  border: 1px solid var(--border);
+  outline: none;
+}
+
+.field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+/* Настройки */
+
+.settings-help {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.settings-block {
+  margin: 23px 0;
+}
+
+.settings-block h3 {
+  margin-bottom: 12px;
+}
+
+.theme-toggle {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.wallpaper-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+}
+
+.wallpaper-choice {
+  min-height: 85px;
+  display: flex;
+  align-items: flex-end;
+  text-align: left;
+  color: white;
+  font-weight: 900;
+}
+
+.wallpaper-choice[data-wallpaper="aurora"] {
+  background: linear-gradient(135deg,#7357dc,#1a8aae,#10162e);
+}
+
+.wallpaper-choice[data-wallpaper="nebula"] {
+  background: linear-gradient(135deg,#de5b8c,#6c3cb1,#19112c);
+}
+
+.wallpaper-choice[data-wallpaper="ocean"] {
+  background: linear-gradient(135deg,#168bb1,#0d5363,#071b29);
+}
+
+.wallpaper-choice[data-wallpaper="sunset"] {
+  background: linear-gradient(135deg,#ffb75e,#f56b79,#5b2759);
+}
+
+.wallpaper-choice[data-wallpaper="forest"] {
+  background: linear-gradient(135deg,#48b58d,#1a5f4b,#081d17);
+}
+
+.wallpaper-choice[data-wallpaper="crystal"] {
+  background: linear-gradient(135deg,#dce5ff,#b9c7ff,#e9d8ff);
+  color: #171a26;
+}
+
+.custom-wallpaper-preview {
+  min-height: 130px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 18px;
+  background: var(--glass-soft);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 16px;
+  margin-top: 12px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.custom-wallpaper-preview.has-image {
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,.8);
+}
+
+.custom-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.custom-wallpaper-status {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+/* Просмотр дня */
+
+.day-summary {
+  padding: 18px;
+  border-radius: 18px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.day-summary-number {
+  font-size: 32px;
+  font-weight: 950;
+  color: var(--accent2);
+}
+
+.day-summary-text {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.day-habit-list {
+  display: grid;
+  gap: 10px;
+}
+
+.day-habit {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 18px;
+}
+
+.day-habit-status {
+  font-size: 22px;
+}
+
+.day-habit-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.day-habit-name {
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.day-habit-description {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.day-habit-type {
+  margin-top: 7px;
+  color: var(--muted2);
+  font-size: 11px;
+}
+
+/* Админка */
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.admin-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.user-list {
+  display: grid;
+  gap: 11px;
+  margin-top: 20px;
+}
+
+.user-row {
+  padding: 15px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-row small {
+  display: block;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.user-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.admin-message {
+  color: var(--green);
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+.empty {
+  padding: 40px 20px;
+  border-radius: 20px;
+  text-align: center;
+  color: var(--muted);
+}
+
+footer {
+  margin-top: 45px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+@media(max-width:740px) {
+  .container {
+    padding: 16px 12px 70px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .stat {
+    padding: 16px;
+  }
+
+  .stat-number {
+    font-size: 25px;
+  }
+
+  .hero {
+    padding: 18px;
+  }
+
+  .habit {
+    padding: 13px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .habit-main {
+    width: 100%;
+  }
+
+  .habit-actions {
+    margin-left: auto;
+  }
+
+  .calendar {
+    gap: 4px;
+  }
+
+  .day {
+    min-height: 55px;
+    border-radius: 12px;
+  }
+
+  .day strong {
+    font-size: 11px;
+  }
+
+  .day span {
+    font-size: 10px;
+  }
+
+  .calendar-navigation {
+    width: 100%;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
+  .calendar-title {
+    min-width: 0;
+    font-size: 12px;
+  }
+
+  .admin-form {
+    grid-template-columns: 1fr;
+  }
+
+  .user-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wallpaper-grid {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .modal {
+    padding: 20px;
+  }
+}
+</style>
+</head>
+
+<body class="theme-dark wallpaper-aurora">
+
+<!-- Авторизация -->
+
+<div class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div class="logo">
+      Трекер привычек<span> и отвычек</span>
+    </div>
+
+    <h1 id="authTitle">С возвращением 👋</h1>
+
+    <p id="authDescription">
+      Войди в аккаунт, чтобы продолжить.
+    </p>
+
+    <form id="authForm">
+      <input
+        id="authUsername"
+        placeholder="Логин"
+        autocomplete="username"
+        maxlength="30"
+        required
+      >
+
+      <input
+        id="authPassword"
+        type="password"
+        placeholder="Пароль"
+        autocomplete="current-password"
+        required
+      >
+
+      <button class="btn" id="authSubmit" type="submit">
+        Войти →
+      </button>
+    </form>
+
+    <div class="auth-error" id="authError"></div>
+
+    <div class="auth-footer">
+      <span id="authSwitchText">Нет аккаунта?</span>
+      <button type="button" class="auth-switch" id="authSwitch">
+        Зарегистрироваться
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Приложение -->
+
+<div class="container hidden" id="app">
+
+<header>
+  <div class="logo">
+    Трекер привычек<span> и отвычек</span>
+  </div>
+
+  <div class="date" id="todayDate"></div>
+
+  <div class="account-controls">
+    <span class="account-name" id="accountName"></span>
+    <span class="badge" id="accountBadge"></span>
+
+    <button class="btn btn-secondary btn-small hidden" id="settingsButton">
+      🎨 Настройки
+    </button>
+
+    <button class="btn btn-secondary btn-small hidden" id="adminButton">
+      ⚙️ Админ-панель
+    </button>
+
+    <button class="btn btn-secondary btn-small" id="logoutButton">
+      Выйти
+    </button>
+  </div>
+</header>
+
+<main id="trackerPage">
+
+<section class="hero">
+  <h1>Становись лучше каждый день ✨</h1>
+
+  <p>
+    Создавай полезные привычки, избавляйся от вредных
+    и следи за своим прогрессом.
+  </p>
+</section>
+
+<section class="stats">
+  <div class="stat">
+    <div class="stat-label">Всего целей</div>
+    <div class="stat-number" id="total">0</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-label">Выполнено сегодня</div>
+    <div class="stat-number" id="completed">0</div>
+  </div>
+
+  <div class="stat premium-feature">
+    <div class="stat-label">Прогресс дня</div>
+    <div class="stat-number" id="percent">0%</div>
+  </div>
+
+  <div class="stat premium-feature">
+    <div class="stat-label">Лучшая серия 🔥</div>
+    <div class="stat-number" id="best">0</div>
+  </div>
+</section>
+
+<div class="toolbar">
+  <h2>Мои цели</h2>
+
+  <button class="btn" id="addHabitButton">
+    ＋ Добавить цель
+  </button>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-filter="all">Все</button>
+  <button class="tab" data-filter="good">✅ Привычки</button>
+  <button class="tab" data-filter="bad">🚫 Отвычки</button>
+</div>
+
+<div class="habit-list" id="habitList"></div>
+
+<section class="panel premium-feature">
+  <h2>📅 Календарь активности</h2>
+
+  <p>
+    Выбери дату, чтобы посмотреть выполненные
+    и невыполненные привычки.
+  </p>
+
+  <div class="calendar-toolbar">
+    <div class="calendar-modes">
+      <button class="calendar-mode" data-mode="day">День</button>
+      <button class="calendar-mode" data-mode="week">Неделя</button>
+      <button class="calendar-mode active" data-mode="month">Месяц</button>
+    </div>
+
+    <div class="calendar-navigation">
+      <button class="btn btn-secondary btn-small" id="calendarPrev">←</button>
+      <div class="calendar-title" id="calendarTitle"></div>
+      <button class="btn btn-secondary btn-small" id="calendarNext">→</button>
+      <button class="btn btn-secondary btn-small" id="calendarToday">Сегодня</button>
+    </div>
+  </div>
+
+  <div class="calendar" id="calendar"></div>
+</section>
+
+<section class="panel premium-feature">
+  <h2>🎯 Прогресс сегодня</h2>
+  <p id="progressText"></p>
+
+  <div class="progress">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</section>
+
+<div class="premium-info hidden" id="premiumInfo">
+  <h3>👑 Возможности Premium</h3>
+
+  <p>
+    Тёмная тема, календарь, статистика, серии,
+    рекорды и собственные обои доступны Premium-пользователям.
+  </p>
+</div>
+
+</main>
+
+<!-- Админ-панель -->
+
+<section id="adminPage" class="hidden">
+  <div class="admin-header">
+    <h1>⚙️ Админ-панель</h1>
+
+    <button class="btn btn-secondary" id="backToTracker">
+      ← Назад
+    </button>
+  </div>
+
+  <section class="panel">
+    <h2>👑 Создать Premium-аккаунт</h2>
+    <p>Новый пользователь сразу получит Premium.</p>
+
+    <form class="admin-form" id="adminCreateForm">
+      <div class="field">
+        <label>Логин</label>
+        <input id="newUsername" maxlength="30" required>
+      </div>
+
+      <div class="field">
+        <label>Пароль</label>
+        <input id="newPassword" type="password" minlength="8" required>
+      </div>
+
+      <button class="btn btn-green" type="submit">
+        ＋ Создать
+      </button>
+    </form>
+
+    <div class="admin-message" id="adminMessage"></div>
+  </section>
+
+  <section class="panel">
+    <h2>👥 Пользователи</h2>
+    <div class="user-list" id="userList"></div>
+  </section>
+</section>
+
+<footer>
+  Трекер привычек и отвычек 💜<br>
+  Маленькие шаги — большие изменения.<br>
+  Аккаунты и привычки хранятся на сервере.
+</footer>
+
+</div>
+
+<!-- Создание / редактирование привычки -->
+
+<div class="modal-bg" id="habitModal">
+  <div class="modal">
+    <h2 id="habitModalTitle">Новая цель ✨</h2>
+
+    <form id="habitForm">
+      <div class="field">
+        <label>Название</label>
+        <input id="habitName" maxlength="70" required>
+      </div>
+
+      <div class="field">
+        <label>Описание</label>
+        <textarea
+          id="habitDescription"
+          maxlength="1000"
+          placeholder="Необязательно"
+        ></textarea>
+      </div>
+
+      <div class="field">
+        <label>Тип</label>
+        <select id="habitType">
+          <option value="good">✅ Привычка</option>
+          <option value="bad">🚫 Отвычка</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Эмодзи</label>
+        <input id="habitEmoji" maxlength="8" placeholder="📚">
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelHabit">
+          Отмена
+        </button>
+
+        <button type="submit" class="btn" id="habitSubmit">
+          Создать
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Просмотр дня -->
+
+<div class="modal-bg" id="dayModal">
+  <div class="modal">
+    <h2 id="dayModalTitle">📅 Информация за день</h2>
+
+    <div class="day-summary">
+      <div class="day-summary-number" id="daySummaryNumber">0/0</div>
+      <div class="day-summary-text" id="daySummaryText"></div>
+    </div>
+
+    <h3>Список целей</h3>
+    <div class="day-habit-list" id="dayHabitList"></div>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="closeDayButton">
+        Закрыть
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Настройки -->
+
+<div class="modal-bg" id="settingsModal">
+  <div class="modal large">
+    <h2>🎨 Настройки оформления</h2>
+
+    <p class="settings-help">
+      Настройки сохраняются только в этом браузере.
+      SQLite и сервер не изменяются.
+    </p>
+
+    <div class="settings-block">
+      <h3>Тема</h3>
+
+      <div class="theme-toggle">
+        <button type="button" class="theme-choice" data-theme="dark">
+          🌙 Тёмная
+        </button>
+
+        <button type="button" class="theme-choice" data-theme="light">
+          ☀️ Светлая
+        </button>
+      </div>
+    </div>
+
+    <div class="settings-block">
+      <h3>Готовые обои</h3>
+
+      <div class="wallpaper-grid">
+        <button type="button" class="wallpaper-choice" data-wallpaper="aurora">
+          Aurora
+        </button>
+
+        <button type="button" class="wallpaper-choice" data-wallpaper="nebula">
+          Nebula
+        </button>
+
+        <button type="button" class="wallpaper-choice" data-wallpaper="ocean">
+          Ocean
+        </button>
+
+        <button type="button" class="wallpaper-choice" data-wallpaper="sunset">
+          Sunset
+        </button>
+
+        <button type="button" class="wallpaper-choice" data-wallpaper="forest">
+          Forest
+        </button>
+
+        <button type="button" class="wallpaper-choice" data-wallpaper="crystal">
+          Crystal
+        </button>
+      </div>
+    </div>
+
+    <div class="settings-block">
+      <h3>🖼️ Собственные обои</h3>
+
+      <p class="settings-help">
+        Загрузи JPG, PNG, WebP или GIF.
+        Рекомендуемый размер — до 5 МБ.
+        Изображение сохранится локально в IndexedDB.
+      </p>
+
+      <input
+        type="file"
+        id="customWallpaperInput"
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        class="hidden"
+      >
+
+      <button class="btn btn-secondary" id="uploadWallpaperButton">
+        📁 Выбрать изображение
+      </button>
+
+      <div class="custom-wallpaper-preview" id="customWallpaperPreview">
+        Собственные обои ещё не загружены
+      </div>
+
+      <div class="custom-actions">
+        <button class="btn btn-secondary" id="useCustomWallpaper">
+          Применить мои обои
+        </button>
+
+        <button class="btn btn-danger" id="deleteCustomWallpaper">
+          Удалить мои обои
+        </button>
+      </div>
+
+      <div class="custom-wallpaper-status" id="customWallpaperStatus"></div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="resetAppearance">
+        Сбросить оформление
+      </button>
+
+      <button class="btn" id="closeSettingsButton">
+        Готово
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* =========================
+   API
+========================= */
+
+const API = "/api";
+
+let token = localStorage.getItem("auth_token");
+let currentUser = null;
+let habits = [];
+
+let filter = "all";
+let authMode = "login";
+let calendarMode = "month";
+let calendarDate = new Date();
+let editingHabitId = null;
+
+let appearance = {
+  theme: "dark",
+  wallpaper: "aurora"
+};
+
+let customWallpaperUrl = null;
+let appearanceGeneration = 0;
+
+const WALLPAPERS = [
+  "aurora",
+  "nebula",
+  "ocean",
+  "sunset",
+  "forest",
+  "crystal"
+];
+
+/* =========================
+   Утилиты
+========================= */
+
+function $(id) {
+  return document.getElementById(id);
+}
+
+function dateKey(date) {
+  return (
+    date.getFullYear() + "-" +
+    String(date.getMonth() + 1).padStart(2, "0") + "-" +
+    String(date.getDate()).padStart(2, "0")
+  );
+}
+
+function today() {
+  return dateKey(new Date());
+}
+
+function parseDateKey(key) {
+  const [y, m, d] = key.split("-").map(Number);
+  return new Date(y, m - 1, d, 12);
+}
+
+function shiftDate(offset) {
+  const d = new Date();
+  d.setHours(12, 0, 0, 0);
+  d.setDate(d.getDate() + offset);
+  return dateKey(d);
+}
+
+function formatDate(date) {
+  return date.toLocaleDateString("ru-RU", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function isPremium() {
+  return !!(currentUser?.premium || currentUser?.admin);
+}
+
+function isAdmin() {
+  return !!currentUser?.admin;
+}
+
+function showError(error) {
+  alert(error.message || "Произошла ошибка.");
+}
+
+/* =========================
+   API-запросы
+========================= */
+
+async function apiRequest(url, options = {}) {
+  let response;
+
+  try {
+    response = await fetch(API + url, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...options.headers
+      }
+    });
+  } catch {
+    throw new Error("Не удалось подключиться к серверу.");
+  }
+
+  let data;
+
+  try {
+    data = await response.json();
+  } catch {
+    throw new Error("Сервер вернул некорректный ответ.");
+  }
+
+  if (!response.ok) {
+    if (
+      response.status === 401 &&
+      url !== "/login" &&
+      url !== "/register"
+    ) {
+      logout();
+    }
+
+    throw new Error(data.error || "Ошибка сервера");
+  }
+
+  return data;
+}
+
+/* =========================
+   IndexedDB для обоев
+========================= */
+
+const WALLPAPER_DB = "tracker_wallpapers_db";
+const WALLPAPER_STORE = "wallpapers";
+
+function openWallpaperDB() {
+  return new Promise((resolve, reject) => {
+    if (!("indexedDB" in window)) {
+      reject(new Error("IndexedDB недоступна."));
+      return;
+    }
+
+    const request = indexedDB.open(WALLPAPER_DB, 1);
+
+    request.onupgradeneeded = () => {
+      const db = request.result;
+
+      if (!db.objectStoreNames.contains(WALLPAPER_STORE)) {
+        db.createObjectStore(WALLPAPER_STORE);
+      }
+    };
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function wallpaperDBAction(mode, action) {
+  const db = await openWallpaperDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(WALLPAPER_STORE, mode);
+    const store = transaction.objectStore(WALLPAPER_STORE);
+
+    const request = action(store);
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+
+    transaction.oncomplete = () => db.close();
+    transaction.onerror = () => db.close();
+    transaction.onabort = () => db.close();
+  });
+}
+
+function wallpaperUserKey() {
+  return "user_" + encodeURIComponent(currentUser?.username || "guest");
+}
+
+async function saveCustomWallpaperBlob(blob) {
+  return wallpaperDBAction(
+    "readwrite",
+    store => store.put(blob, wallpaperUserKey())
+  );
+}
+
+async function getCustomWallpaperBlob() {
+  return wallpaperDBAction(
+    "readonly",
+    store => store.get(wallpaperUserKey())
+  );
+}
+
+async function deleteCustomWallpaperBlob() {
+  return wallpaperDBAction(
+    "readwrite",
+    store => store.delete(wallpaperUserKey())
+  );
+}
+
+/* =========================
+   Локальные настройки
+========================= */
+
+function appearanceKey() {
+  return (
+    "tracker_appearance_v2_" +
+    encodeURIComponent(currentUser?.username || "guest")
+  );
+}
+
+function releaseCustomWallpaperUrl() {
+  if (customWallpaperUrl) {
+    URL.revokeObjectURL(customWallpaperUrl);
+    customWallpaperUrl = null;
+  }
+
+  document.body.style.removeProperty("--custom-wallpaper");
+}
+
+function applyAppearance() {
+  document.body.classList.remove(
+    "theme-dark",
+    "theme-light",
+    "free-user",
+    "wallpaper-custom",
+    ...WALLPAPERS.map(name => "wallpaper-" + name)
+  );
+
+  if (!currentUser || !isPremium()) {
+    document.body.classList.add("free-user");
+    return;
+  }
+
+  document.body.classList.add(
+    appearance.theme === "light"
+      ? "theme-light"
+      : "theme-dark"
+  );
+
+  if (
+    appearance.wallpaper === "custom" &&
+    customWallpaperUrl
+  ) {
+    document.body.classList.add("wallpaper-custom");
+
+    document.body.style.setProperty(
+      "--custom-wallpaper",
+      `url("${customWallpaperUrl}")`
+    );
+  } else {
+    document.body.classList.add(
+      "wallpaper-" +
+      (WALLPAPERS.includes(appearance.wallpaper)
+        ? appearance.wallpaper
+        : "aurora")
+    );
+  }
+
+  syncAppearanceUI();
+}
+
+function syncAppearanceUI() {
+  document.querySelectorAll(".theme-choice").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.theme === appearance.theme
+    );
+  });
+
+  document.querySelectorAll(".wallpaper-choice").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.wallpaper === appearance.wallpaper
+    );
+  });
+}
+
+function saveAppearance() {
+  if (!currentUser || !isPremium()) return;
+
+  try {
+    localStorage.setItem(
+      appearanceKey(),
+      JSON.stringify(appearance)
+    );
+  } catch {
+    console.warn("Не удалось сохранить оформление.");
+  }
+}
+
+async function loadAppearance() {
+  const generation = ++appearanceGeneration;
+
+  releaseCustomWallpaperUrl();
+
+  appearance = {
+    theme: "dark",
+    wallpaper: "aurora"
+  };
+
+  if (!currentUser || !isPremium()) {
+    applyAppearance();
+    return;
+  }
+
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem(appearanceKey())
+    );
+
+    if (saved && typeof saved === "object") {
+      if (["dark", "light"].includes(saved.theme)) {
+        appearance.theme = saved.theme;
+      }
+
+      if (
+        WALLPAPERS.includes(saved.wallpaper) ||
+        saved.wallpaper === "custom"
+      ) {
+        appearance.wallpaper = saved.wallpaper;
+      }
+    }
+  } catch {}
+
+  applyAppearance();
+
+  try {
+    const blob = await getCustomWallpaperBlob();
+
+    if (generation !== appearanceGeneration) return;
+
+    if (blob instanceof Blob) {
+      customWallpaperUrl = URL.createObjectURL(blob);
+    }
+  } catch (error) {
+    console.warn("Ошибка загрузки обоев:", error);
+  }
+
+  if (generation !== appearanceGeneration) return;
+
+  applyAppearance();
+  updateCustomWallpaperPreview();
+}
+
+function updateCustomWallpaperPreview() {
+  const preview = $("customWallpaperPreview");
+
+  if (!preview) return;
+
+  preview.style.backgroundImage = "";
+  preview.classList.remove("has-image");
+
+  if (customWallpaperUrl) {
+    preview.style.backgroundImage =
+      `linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.35)),url("${customWallpaperUrl}")`;
+
+    preview.classList.add("has-image");
+    preview.textContent = "Мои обои";
+  } else {
+    preview.textContent = "Собственные обои ещё не загружены";
+  }
+
+  $("useCustomWallpaper").disabled = !customWallpaperUrl;
+  $("deleteCustomWallpaper").disabled = !customWallpaperUrl;
+}
+
+function openSettings() {
+  if (!isPremium()) return;
+
+  syncAppearanceUI();
+  updateCustomWallpaperPreview();
+
+  $("settingsModal").classList.add("open");
+}
+
+function closeSettings() {
+  $("settingsModal").classList.remove("open");
+}
+
+$("settingsButton").addEventListener("click", openSettings);
+$("closeSettingsButton").addEventListener("click", closeSettings);
+
+document.querySelectorAll(".theme-choice").forEach(button => {
+  button.addEventListener("click", () => {
+    if (!isPremium()) return;
+
+    appearance.theme = button.dataset.theme;
+
+    saveAppearance();
+    applyAppearance();
+  });
+});
+
+document.querySelectorAll(".wallpaper-choice").forEach(button => {
+  button.addEventListener("click", () => {
+    if (!isPremium()) return;
+
+    appearance.wallpaper = button.dataset.wallpaper;
+
+    saveAppearance();
+    applyAppearance();
+  });
+});
+
+$("resetAppearance").addEventListener("click", () => {
+  if (!isPremium()) return;
+
+  appearance = {
+    theme: "dark",
+    wallpaper: "aurora"
+  };
+
+  saveAppearance();
+  applyAppearance();
+});
+
+/* =========================
+   Загрузка собственных обоев
+========================= */
+
+$("uploadWallpaperButton").addEventListener("click", () => {
+  if (!isPremium()) return;
+
+  $("customWallpaperInput").click();
+});
+
+$("customWallpaperInput").addEventListener("change", async event => {
+  if (!isPremium()) return;
+
+  const file = event.target.files?.[0];
+
+  if (!file) return;
+
+  const allowed = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/gif"
+  ];
+
+  if (!allowed.includes(file.type)) {
+    $("customWallpaperStatus").textContent =
+      "Неподдерживаемый формат изображения.";
+    return;
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    $("customWallpaperStatus").textContent =
+      "Изображение слишком большое. Максимум 5 МБ.";
+    return;
+  }
+
+  const generation = appearanceGeneration;
+
+  $("customWallpaperStatus").textContent =
+    "Сохранение изображения...";
+
+  try {
+    await saveCustomWallpaperBlob(file);
+
+    if (generation !== appearanceGeneration) return;
+
+    releaseCustomWallpaperUrl();
+
+    customWallpaperUrl = URL.createObjectURL(file);
+
+    appearance.wallpaper = "custom";
+
+    saveAppearance();
+    applyAppearance();
+    updateCustomWallpaperPreview();
+
+    $("customWallpaperStatus").textContent =
+      "✅ Обои сохранены и применены!";
+  } catch (error) {
+    $("customWallpaperStatus").textContent =
+      "Не удалось сохранить изображение: " + error.message;
+  }
+
+  event.target.value = "";
+});
+
+$("useCustomWallpaper").addEventListener("click", () => {
+  if (!isPremium() || !customWallpaperUrl) return;
+
+  appearance.wallpaper = "custom";
+
+  saveAppearance();
+  applyAppearance();
+
+  $("customWallpaperStatus").textContent =
+    "✅ Собственные обои применены.";
+});
+
+$("deleteCustomWallpaper").addEventListener("click", async () => {
+  if (!isPremium()) return;
+
+  if (!confirm("Удалить собственные обои с этого устройства?")) {
+    return;
+  }
+
+  try {
+    await deleteCustomWallpaperBlob();
+
+    releaseCustomWallpaperUrl();
+
+    if (appearance.wallpaper === "custom") {
+      appearance.wallpaper = "aurora";
+    }
+
+    saveAppearance();
+    applyAppearance();
+    updateCustomWallpaperPreview();
+
+    $("customWallpaperStatus").textContent =
+      "Собственные обои удалены.";
+  } catch (error) {
+    $("customWallpaperStatus").textContent =
+      "Ошибка удаления: " + error.message;
+  }
+});
+
+/* =========================
+   Авторизация
+========================= */
+
+function switchAuthMode() {
+  authMode = authMode === "login" ? "register" : "login";
+
+  const registering = authMode === "register";
+
+  $("authTitle").textContent =
+    registering ? "Создай аккаунт 🚀" : "С возвращением 👋";
+
+  $("authDescription").textContent =
+    registering
+      ? "Создай аккаунт и начни отслеживать цели."
+      : "Войди в аккаунт, чтобы продолжить.";
+
+  $("authSubmit").textContent =
+    registering ? "Зарегистрироваться →" : "Войти →";
+
+  $("authSwitchText").textContent =
+    registering ? "Уже есть аккаунт?" : "Нет аккаунта?";
+
+  $("authSwitch").textContent =
+    registering ? "Войти" : "Зарегистрироваться";
+
+  $("authPassword").autocomplete =
+    registering ? "new-password" : "current-password";
+
+  $("authError").textContent = "";
+}
+
+$("authSwitch").addEventListener("click", switchAuthMode);
+
+$("authForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const username = $("authUsername").value.trim();
+  const password = $("authPassword").value;
+
+  const button = $("authSubmit");
+  button.disabled = true;
+
+  $("authError").textContent = "";
+
+  try {
+    const endpoint =
+      authMode === "register" ? "/register" : "/login";
+
+    const result = await apiRequest(endpoint, {
+      method: "POST",
+      body: JSON.stringify({ username, password })
+    });
+
+    token = result.token;
+    currentUser = result.user;
+
+    localStorage.setItem("auth_token", token);
+
+    await startApp();
+  } catch (error) {
+    $("authError").textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+});
+
+/* =========================
+   Сессия
+========================= */
+
+async function restoreSession() {
+  if (!token) {
+    applyAppearance();
+    return;
+  }
+
+  try {
+    currentUser = await apiRequest("/me");
+    await startApp();
+  } catch {
+    logout();
+  }
+}
+
+async function startApp() {
+  $("authScreen").classList.add("hidden");
+  $("app").classList.remove("hidden");
+
+  $("todayDate").textContent = formatDate(new Date());
+
+  await loadAppearance();
+
+  applyPermissions();
+
+  await loadHabits();
+
+  showTracker();
+}
+
+function logout() {
+  ++appearanceGeneration;
+
+  token = null;
+  currentUser = null;
+  habits = [];
+
+  localStorage.removeItem("auth_token");
+
+  $("app").classList.add("hidden");
+  $("authScreen").classList.remove("hidden");
+
+  $("authPassword").value = "";
+
+  closeHabitModal();
+  closeDayModal();
+  closeSettings();
+
+  releaseCustomWallpaperUrl();
+  applyAppearance();
+}
+
+$("logoutButton").addEventListener("click", logout);
+
+/* =========================
+   Права
+========================= */
+
+function applyPermissions() {
+  const premium = isPremium();
+
+  applyAppearance();
+
+  $("accountName").textContent =
+    (isAdmin() ? "🛡️ " : premium ? "👑 " : "👤 ") +
+    currentUser.username;
+
+  $("accountBadge").textContent =
+    isAdmin() ? "ADMIN" : premium ? "PREMIUM" : "FREE";
+
+  $("adminButton").classList.toggle("hidden", !isAdmin());
+  $("settingsButton").classList.toggle("hidden", !premium);
+
+  document.querySelectorAll(".premium-feature").forEach(element => {
+    element.classList.toggle("locked", !premium);
+  });
+
+  $("premiumInfo").classList.toggle("hidden", premium);
+}
+
+async function refreshAccount() {
+  const wasPremium = isPremium();
+
+  currentUser = await apiRequest("/me");
+
+  if (wasPremium !== isPremium()) {
+    if (!isPremium()) {
+      closeSettings();
+    }
+
+    await loadAppearance();
+  }
+
+  applyPermissions();
+}
+
+/* =========================
+   Страницы
+========================= */
+
+function showTracker() {
+  $("trackerPage").classList.remove("hidden");
+  $("adminPage").classList.add("hidden");
+  render();
+}
+
+async function showAdmin() {
+  if (!isAdmin()) return;
+
+  $("trackerPage").classList.add("hidden");
+  $("adminPage").classList.remove("hidden");
+
+  await renderUsers();
+}
+
+$("adminButton").addEventListener("click", () => {
+  showAdmin().catch(showError);
+});
+
+$("backToTracker").addEventListener("click", showTracker);
+
+/* =========================
+   Админ-панель
+========================= */
+
+async function renderUsers() {
+  if (!isAdmin()) return;
+
+  const users = await apiRequest("/admin/users");
+
+  $("userList").innerHTML = users.map(user => {
+    const admin = !!user.admin;
+    const premium = !!user.premium || admin;
+
+    return `
+      <div class="user-row">
+        <div>
+          <strong>
+            ${admin ? "🛡️" : premium ? "👑" : "👤"}
+            ${escapeHTML(user.username)}
+          </strong>
+
+          <small>
+            ${admin ? "Администратор" : premium ? "Premium" : "Free"}
+          </small>
+        </div>
+
+        ${
+          admin
+            ? '<span class="badge">ADMIN</span>'
+            : `
+              <div class="user-actions">
+                <button
+                  class="btn btn-small"
+                  data-action="premium"
+                  data-id="${user.id}"
+                  data-premium="${premium}"
+                >
+                  ${premium ? "Убрать Premium" : "Выдать Premium"}
+                </button>
+
+                <button
+                  class="btn btn-danger btn-small"
+                  data-action="delete"
+                  data-id="${user.id}"
+                >
+                  Удалить
+                </button>
+              </div>
+            `
+        }
+      </div>
+    `;
+  }).join("");
+}
+
+$("adminCreateForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  if (!isAdmin()) return;
+
+  const username = $("newUsername").value.trim();
+  const password = $("newPassword").value;
+
+  try {
+    await apiRequest("/admin/users", {
+      method: "POST",
+      body: JSON.stringify({ username, password })
+    });
+
+    event.target.reset();
+
+    $("adminMessage").textContent =
+      "Premium-аккаунт создан!";
+
+    await renderUsers();
+  } catch (error) {
+    $("adminMessage").textContent = error.message;
+  }
+});
+
+$("userList").addEventListener("click", async event => {
+  const button = event.target.closest("[data-action]");
+
+  if (!button || !isAdmin()) return;
+
+  const id = button.dataset.id;
+
+  try {
+    if (button.dataset.action === "premium") {
+      const premium = button.dataset.premium !== "true";
+
+      await apiRequest(`/admin/users/${id}/premium`, {
+        method: "PATCH",
+        body: JSON.stringify({ premium })
+      });
+    }
+
+    if (button.dataset.action === "delete") {
+      if (!confirm("Удалить пользователя и все его данные?")) {
+        return;
+      }
+
+      await apiRequest(`/admin/users/${id}`, {
+        method: "DELETE"
+      });
+    }
+
+    await renderUsers();
+  } catch (error) {
+    showError(error);
+  }
+});
+
+/* =========================
+   Привычки
+========================= */
+
+async function loadHabits() {
+  habits = await apiRequest("/habits");
+  render();
+}
+
+function streak(habit) {
+  let count = 0;
+  let offset = habit.days?.[today()] ? 0 : -1;
+
+  while (habit.days?.[shiftDate(offset)]) {
+    count++;
+    offset--;
+  }
+
+  return count;
+}
+
+function bestStreak(habit) {
+  const dates = Object.keys(habit.days || {})
+    .filter(key => habit.days[key] && key <= today())
+    .sort();
+
+  let best = 0;
+  let current = 0;
+  let previous = null;
+
+  for (const key of dates) {
+    if (previous) {
+      const d = parseDateKey(previous);
+      d.setDate(d.getDate() + 1);
+
+      current = dateKey(d) === key ? current + 1 : 1;
+    } else {
+      current = 1;
+    }
+
+    best = Math.max(best, current);
+    previous = key;
+  }
+
+  return best;
+}
+
+async function toggleHabit(id) {
+  const habit = habits.find(h => h.id === id);
+  if (!habit) return;
+
+  const completed = !habit.days?.[today()];
+
+  await apiRequest(
+    `/habits/${encodeURIComponent(id)}/days/${today()}`,
+    {
+      method: "PUT",
+      body: JSON.stringify({ completed })
+    }
+  );
+
+  await loadHabits();
+}
+
+async function deleteHabit(id) {
+  if (!confirm("Удалить цель и всю историю выполнения?")) {
+    return;
+  }
+
+  await apiRequest(`/habits/${encodeURIComponent(id)}`, {
+    method: "DELETE"
+  });
+
+  await loadHabits();
+}
+
+function renderHabits() {
+  const visible = habits.filter(
+    h => filter === "all" || h.type === filter
+  );
+
+  if (!visible.length) {
+    $("habitList").innerHTML =
+      '<div class="empty">🌱 Здесь пока пусто.<br>Добавь первую цель!</div>';
+    return;
+  }
+
+  $("habitList").innerHTML = visible.map(habit => {
+    const done = !!habit.days?.[today()];
+
+    const info = isPremium()
+      ? `🔥 ${streak(habit)} дн. · Рекорд: ${bestStreak(habit)} дн.`
+      : "🔒 Серии доступны с Premium";
+
+    return `
+      <div class="habit">
+        <div class="habit-main">
+          <div class="icon">
+            ${escapeHTML(habit.emoji || "✨")}
+          </div>
+
+          <div class="habit-content">
+            <div class="habit-name">
+              ${escapeHTML(habit.name)}
+            </div>
+
+            ${
+              habit.description
+                ? `<div class="habit-description">
+                    ${escapeHTML(habit.description)}
+                   </div>`
+                : ""
+            }
+
+            <div class="habit-info">${info}</div>
+          </div>
+        </div>
+
+        <div class="habit-actions">
+          <button
+            class="check ${done ? "done" : ""}"
+            data-action="toggle"
+            data-id="${escapeHTML(habit.id)}"
+          >
+            ${done ? "✓ Готово" : "Отметить"}
+          </button>
+
+          <button
+            class="icon-button"
+            data-action="edit"
+            data-id="${escapeHTML(habit.id)}"
+            title="Редактировать"
+          >
+            ✏️
+          </button>
+
+          <button
+            class="icon-button delete"
+            data-action="delete"
+            data-id="${escapeHTML(habit.id)}"
+            title="Удалить"
+          >
+            ×
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+$("habitList").addEventListener("click", async event => {
+  const button = event.target.closest("[data-action]");
+  if (!button) return;
+
+  const { action, id } = button.dataset;
+
+  try {
+    if (action === "toggle") await toggleHabit(id);
+    if (action === "delete") await deleteHabit(id);
+    if (action === "edit") editHabit(id);
+  } catch (error) {
+    showError(error);
+  }
+});
+
+document.querySelectorAll(".tab").forEach(button => {
+  button.addEventListener("click", () => {
+    filter = button.dataset.filter;
+
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.classList.remove("active");
+    });
+
+    button.classList.add("active");
+    renderHabits();
+  });
+});
+
+/* =========================
+   Создание и редактирование
+========================= */
+
+function openHabitModal() {
+  editingHabitId = null;
+
+  $("habitForm").reset();
+  $("habitModalTitle").textContent = "Новая цель ✨";
+  $("habitSubmit").textContent = "Создать";
+
+  $("habitModal").classList.add("open");
+  $("habitName").focus();
+}
+
+function editHabit(id) {
+  const habit = habits.find(h => h.id === id);
+  if (!habit) return;
+
+  editingHabitId = id;
+
+  $("habitName").value = habit.name;
+  $("habitDescription").value = habit.description || "";
+  $("habitType").value = habit.type;
+  $("habitEmoji").value = habit.emoji || "";
+
+  $("habitModalTitle").textContent = "Редактировать цель ✏️";
+  $("habitSubmit").textContent = "Сохранить";
+
+  $("habitModal").classList.add("open");
+}
+
+function closeHabitModal() {
+  $("habitModal").classList.remove("open");
+  $("habitForm").reset();
+  editingHabitId = null;
+}
+
+$("addHabitButton").addEventListener("click", openHabitModal);
+$("cancelHabit").addEventListener("click", closeHabitModal);
+
+$("habitForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const body = {
+    name: $("habitName").value.trim(),
+    description: $("habitDescription").value.trim(),
+    type: $("habitType").value,
+    emoji: $("habitEmoji").value.trim()
+  };
+
+  if (!body.name) return;
+
+  const submit = $("habitSubmit");
+  submit.disabled = true;
+
+  try {
+    if (editingHabitId) {
+      await apiRequest(
+        `/habits/${encodeURIComponent(editingHabitId)}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(body)
+        }
+      );
+    } else {
+      await apiRequest("/habits", {
+        method: "POST",
+        body: JSON.stringify(body)
+      });
+    }
+
+    closeHabitModal();
+    await loadHabits();
+  } catch (error) {
+    showError(error);
+  } finally {
+    submit.disabled = false;
+  }
+});
+
+/* =========================
+   Статистика
+========================= */
+
+function renderStats() {
+  const total = habits.length;
+  const completed = habits.filter(h => h.days?.[today()]).length;
+
+  $("total").textContent = total;
+  $("completed").textContent = completed;
+
+  if (!isPremium()) {
+    $("percent").textContent = "🔒";
+    $("best").textContent = "🔒";
+    $("progressFill").style.width = "0%";
+    $("progressText").textContent = "Доступно с Premium.";
+    return;
+  }
+
+  const percent = total
+    ? Math.round(completed / total * 100)
+    : 0;
+
+  const best = Math.max(0, ...habits.map(bestStreak));
+
+  $("percent").textContent = percent + "%";
+  $("best").textContent = best + " дн.";
+  $("progressFill").style.width = percent + "%";
+
+  $("progressText").textContent =
+    total === 0
+      ? "Добавь первую цель."
+      : percent === 100
+        ? "🔥 Все цели выполнены!"
+        : `Выполнено ${completed} из ${total} целей.`;
+}
+
+/* =========================
+   Календарь
+========================= */
+
+function getCalendarDays() {
+  const days = [];
+  const d = new Date(calendarDate);
+  d.setHours(12, 0, 0, 0);
+
+  if (calendarMode === "day") return [d];
+
+  if (calendarMode === "week") {
+    d.setDate(d.getDate() - (d.getDay() + 6) % 7);
+
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(d);
+      day.setDate(d.getDate() + i);
+      days.push(day);
+    }
+
+    return days;
+  }
+
+  const first = new Date(d.getFullYear(), d.getMonth(), 1, 12);
+  const last = new Date(d.getFullYear(), d.getMonth() + 1, 0, 12);
+
+  const start = new Date(first);
+  start.setDate(start.getDate() - (start.getDay() + 6) % 7);
+
+  const end = new Date(last);
+  end.setDate(end.getDate() + (7 - end.getDay()) % 7);
+
+  for (
+    let day = new Date(start);
+    day <= end;
+    day.setDate(day.getDate() + 1)
+  ) {
+    days.push(new Date(day));
+  }
+
+  return days;
+}
+
+function renderCalendar() {
+  if (!isPremium()) {
+    $("calendar").innerHTML = "";
+    return;
+  }
+
+  const days = getCalendarDays();
+
+  let title = calendarDate.toLocaleDateString("ru-RU", {
+    month: "long",
+    year: "numeric"
+  });
+
+  if (calendarMode === "day") {
+    title = formatDate(calendarDate);
+  }
+
+  if (calendarMode === "week") {
+    title =
+      days[0].toLocaleDateString("ru-RU", {
+        day: "2-digit",
+        month: "2-digit"
+      }) +
+      " — " +
+      days[6].toLocaleDateString("ru-RU", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      });
+  }
+
+  $("calendarTitle").textContent = title;
+  $("calendar").classList.toggle("day-mode", calendarMode === "day");
+
+  let html = "";
+
+  if (calendarMode !== "day") {
+    ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"].forEach(day => {
+      html += `<div class="weekday">${day}</div>`;
+    });
+  }
+
+  for (const date of days) {
+    const key = dateKey(date);
+    const future = key > today();
+
+    const active = habits.filter(
+      h => !h.createdAt || h.createdAt <= key
+    );
+
+    const completed = active.filter(
+      h => h.days?.[key]
+    ).length;
+
+    const total = active.length;
+
+    const state = future
+      ? "future"
+      : total > 0 && completed === total
+        ? "active"
+        : completed > 0
+          ? "partial"
+          : "";
+
+    const otherMonth =
+      calendarMode === "month" &&
+      date.getMonth() !== calendarDate.getMonth();
+
+    const label = date.toLocaleDateString("ru-RU", {
+      day: "2-digit",
+      month: "2-digit"
+    });
+
+    html += `
+      <button
+        class="day ${state}
+          ${otherMonth ? "other-month" : ""}
+          ${key === today() ? "today" : ""}"
+        data-date="${key}"
+        ${future ? "disabled" : ""}
+      >
+        <strong>${label}</strong>
+        <span>
+          ${future ? "—" : total ? `${completed}/${total}` : "·"}
+        </span>
+      </button>
+    `;
+  }
+
+  $("calendar").innerHTML = html;
+}
+
+function setCalendarMode(mode) {
+  if (!isPremium()) return;
+
+  calendarMode = mode;
+
+  document.querySelectorAll(".calendar-mode").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.mode === mode
+    );
+  });
+
+  renderCalendar();
+}
+
+function moveCalendar(direction) {
+  if (!isPremium()) return;
+
+  if (calendarMode === "day") {
+    calendarDate.setDate(calendarDate.getDate() + direction);
+  } else if (calendarMode === "week") {
+    calendarDate.setDate(calendarDate.getDate() + direction * 7);
+  } else {
+    const targetDay = calendarDate.getDate();
+
+    calendarDate.setDate(1);
+    calendarDate.setMonth(calendarDate.getMonth() + direction);
+
+    const lastDay = new Date(
+      calendarDate.getFullYear(),
+      calendarDate.getMonth() + 1,
+      0
+    ).getDate();
+
+    calendarDate.setDate(Math.min(targetDay, lastDay));
+  }
+
+  renderCalendar();
+}
+
+document.querySelectorAll(".calendar-mode").forEach(button => {
+  button.addEventListener("click", () => {
+    setCalendarMode(button.dataset.mode);
+  });
+});
+
+$("calendarPrev").addEventListener("click", () => moveCalendar(-1));
+$("calendarNext").addEventListener("click", () => moveCalendar(1));
+
+$("calendarToday").addEventListener("click", () => {
+  calendarDate = new Date();
+  renderCalendar();
+});
+
+/* =========================
+   Просмотр дня
+========================= */
+
+function openDayModal(key) {
+  if (!isPremium() || key > today()) return;
+
+  const date = parseDateKey(key);
+
+  const active = habits.filter(
+    h => !h.createdAt || h.createdAt <= key
+  );
+
+  const completed = active.filter(
+    h => h.days?.[key]
+  ).length;
+
+  const total = active.length;
+
+  const percent = total
+    ? Math.round(completed / total * 100)
+    : 0;
+
+  $("dayModalTitle").textContent =
+    "📅 " + formatDate(date);
+
+  $("daySummaryNumber").textContent =
+    `${completed}/${total}`;
+
+  $("daySummaryText").textContent =
+    `Выполнено ${percent}% целей`;
+
+  if (!total) {
+    $("dayHabitList").innerHTML =
+      '<div class="empty">На эту дату целей не было.</div>';
+  } else {
+    const sorted = [...active].sort(
+      (a, b) =>
+        Number(!!b.days?.[key]) -
+        Number(!!a.days?.[key])
+    );
+
+    $("dayHabitList").innerHTML = sorted.map(habit => {
+      const done = !!habit.days?.[key];
+
+      return `
+        <div class="day-habit">
+          <div class="day-habit-status">
+            ${done ? "✅" : "❌"}
+          </div>
+
+          <div class="day-habit-content">
+            <div class="day-habit-name">
+              ${escapeHTML(habit.emoji || "✨")}
+              ${escapeHTML(habit.name)}
+            </div>
+
+            ${
+              habit.description
+                ? `<div class="day-habit-description">
+                    ${escapeHTML(habit.description)}
+                   </div>`
+                : ""
+            }
+
+            <div class="day-habit-type">
+              ${habit.type === "bad" ? "🚫 Отвычка" : "✅ Привычка"}
+              · ${done ? "Выполнено" : "Не выполнено"}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  $("dayModal").classList.add("open");
+}
+
+function closeDayModal() {
+  $("dayModal").classList.remove("open");
+}
+
+$("calendar").addEventListener("click", event => {
+  const button = event.target.closest("[data-date]");
+  if (!button || button.disabled) return;
+  openDayModal(button.dataset.date);
+});
+
+$("closeDayButton").addEventListener("click", closeDayModal);
+
+/* =========================
+   Модальные окна
+========================= */
+
+["habitModal","dayModal","settingsModal"].forEach(id => {
+  $(id).addEventListener("click", event => {
+    if (event.target.id !== id) return;
+
+    if (id === "habitModal") closeHabitModal();
+    if (id === "dayModal") closeDayModal();
+    if (id === "settingsModal") closeSettings();
+  });
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeHabitModal();
+    closeDayModal();
+    closeSettings();
+  }
+});
+
+/* =========================
+   Отрисовка
+========================= */
+
+function render() {
+  if (!currentUser) return;
+
+  applyPermissions();
+  renderHabits();
+  renderStats();
+  renderCalendar();
+}
+
+/* =========================
+   Синхронизация
+========================= */
+
+let lastToday = today();
+
+async function refreshData() {
+  if (!token || !currentUser) return;
+
+  try {
+    await refreshAccount();
+    await loadHabits();
+
+    if (!$("adminPage").classList.contains("hidden")) {
+      await renderUsers();
+    }
+  } catch (error) {
+    console.warn("Ошибка синхронизации:", error);
+  }
+}
+
+setInterval(() => {
+  if (lastToday !== today()) {
+    lastToday = today();
+
+    if (currentUser) {
+      $("todayDate").textContent = formatDate(new Date());
+      render();
+    }
+  }
+}, 30000);
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) {
+    refreshData();
+  }
+});
+
+/* =========================
+   Запуск
+========================= */
+
+restoreSession();
+
+</script>
+</body>
+</html>
